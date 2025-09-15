@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <title>Loading Page...</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <div id="portfolioView" style="display: none;">
+            <section class="section" id="portfolioHero">
+                <div class="container">
+                    <h1 class="portfolio-title" id="portfolioTitle"></h1>
+                    <p class="portfolio-description" id="portfolioDescription"></p>
+                </div>
+            </section>
+            <section class="section" id="portfolioDomains">
+                 <div class="container">
+                    <h2 class="section-title">Available Domains</h2>
+                    <div class="grid" id="portfolioGrid"></div>
+                </div>
+            </section>
+            <section class="section" id="portfolioContactSection">
+                <div class="container">
+                    <h2 class="section-title" id="portfolioContactTitle"></h2>
+                    <p class="portfolio-description" id="portfolioContactText"></p>
+                    <div class="grid" id="portfolioContactGrid"></div>
+                </div>
+            </section>
+        </div>
+
+        <main id="salePageMain" style="display: none;">
+            <section class="hero">
+                <a href="#" id="backToPortfolioLink" class="portfolio-back-link" style="display: none;">&larr; Back to Portfolio</a>
+                <div class="domain-badge">For Sale</div>
+                <h1 class="domain-name" id="domainName"></h1>
+                <div class="domain-price" id="domainPrice"></div>
+                <div class="price-badge" id="priceNegotiable"></div>
+                <div class="cta-buttons">
+                    <a href="#contactSection" class="cta-button" id="ctaButton">Get This Domain</a>
+                    <a href="#" target="_blank" rel="noopener" class="cta-button-secondary" id="analyzeButton">Analyze Domain</a>
+                </div>
+            </section>
+
+            <section class="section" id="logoSection" style="display: none;">
+                <div class="container text-center">
+                    <img src="" alt="" id="logoImage" class="logo-image">
+                </div>
+            </section>
+            
+            <section class="section" id="featuresSection" style="display: none;">
+                <div class="container">
+                    <h2 class="section-title">Why This Domain</h2>
+                    <div class="grid" id="featuresGrid"></div>
+                </div>
+            </section>
+            
+            <section class="section" id="contactSection" style="display: none;">
+                <div class="container">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <div class="grid" id="contactGrid"></div>
+                </div>
+            </section>
+            
+            <section class="section" id="marketplacesSection" style="display: none;">
+                <div class="container">
+                    <h2 class="section-title">Buy Through Trusted Marketplaces</h2>
+                    <div class="grid" id="marketplacesGrid"></div>
+                </div>
+            </section>
+
+            <section class="section" id="paymentsSection" style="display: none;">
+                <div class="container">
+                    <h2 class="section-title">Secure Payment Methods</h2>
+                    <div class="payment-methods" id="paymentsList"></div>
+                </div>
+            </section>
+            
+            <section class="section" id="otherDomainsSection" style="display: none;">
+                <div class="container">
+                    <h2 class="section-title">Explore Other Domains</h2>
+                    <div class="grid" id="otherDomainsGrid"></div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="creator-badge">
+            <div>
+                <span>Powered by</span>
+                <a href="https://abtdomain.com" target="_blank" rel="noopener">ABTDomain.com</a>
+                <span>|</span>
+                <a href="#" target="_blank" rel="noopener" id="githubLink">GitHub</a>
+                <span style="opacity: 0.7;" id="version"></span>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="config.js" defer></script>
+    <script src="assets/js/templates.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+</body>
+</html>
