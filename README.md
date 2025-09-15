@@ -44,3 +44,16 @@ All customization happens inside `config.js`. The file is self-documented and al
 
 - `PORTFOLIO_CONFIG`: Defines the content and appearance of your main homepage.
 - `ALL_DOMAIN_CONFIGS`: Acts as the database for all your individual assets. Each key is the domain/subdomain that triggers the rendering of a specific page.
+
+
+## ❤️ Supporting the Project
+
+This project is offered completely free of charge under the MIT license. I believe in open-source and want to provide tools that help the community.
+
+If you find this project useful, please consider showing your support in one of the following ways:
+
+- **⭐ Star the repository on GitHub:** This is the easiest way to show your appreciation and helps increase the project's visibility.
+- **🔗 Keep the footer link:** While the license allows you to remove it, I would be very grateful if you choose to keep the "Powered by" link in the footer. It's a small nod that helps others discover this tool.
+- **Share it:** Tell your friends or colleagues about Domain Portfolio Pages!
+
+Your support is greatly appreciated and motivates me to continue improving this project. Thank you!
