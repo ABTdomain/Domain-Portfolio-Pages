@@ -1,0 +1,343 @@
+/* ============================================
+ * BASE STYLES & SALE PAGE STYLES
+ * ============================================ */
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    min-height: 100%;
+    background-attachment: fixed;
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1rem 2rem 1rem;
+    min-height: 60vh;
+}
+
+.domain-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2rem;
+    animation: fadeIn 0.8s ease;
+    opacity: 0.9;
+}
+
+h1.domain-name {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    min-height: 1.2em;
+    word-break: break-word;
+    animation: fadeInScale 0.6s ease-out;
+}
+
+.domain-price {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    animation: slideUp 0.8s ease 0.2s both;
+    opacity: 0.95;
+}
+
+.price-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    animation: slideUp 0.8s ease 0.3s both;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: slideUp 0.8s ease 0.4s both;
+}
+
+.cta-button, .cta-button-secondary {
+    display: inline-block;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover, .cta-button-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button-secondary {
+    background: transparent !important;
+    border: 2px solid;
+}
+
+.section {
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    padding: 1.5rem;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3); 
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+a.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.5); 
+}
+
+.label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+    margin-bottom: 0.25rem;
+}
+
+.value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+.payment-methods {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.payment-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+footer.creator-badge {
+    position: static; 
+    background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(30,30,30,0.9));
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    margin: 40px auto 20px auto;
+    width: fit-content;
+}
+footer.creator-badge a {
+   color: #00D4FF;
+   text-decoration: none;
+   font-weight: 600;
+}
+footer.creator-badge a:hover {
+   text-decoration: underline;
+}
+
+/* ============================================
+ * PORTFOLIO PAGE STYLES
+ * ============================================ */
+
+#portfolioHero {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.portfolio-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.portfolio-description {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    opacity: 0.85;
+    line-height: 1.6;
+    animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
+}
+
+.portfolio-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    text-align: left;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.portfolio-card:nth-child(1) { animation-delay: 0.1s; }
+.portfolio-card:nth-child(2) { animation-delay: 0.2s; }
+.portfolio-card:nth-child(3) { animation-delay: 0.3s; }
+.portfolio-card:nth-child(4) { animation-delay: 0.4s; }
+.portfolio-card:nth-child(5) { animation-delay: 0.5s; }
+.portfolio-card:nth-child(6) { animation-delay: 0.6s; }
+
+.portfolio-card-domain {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.portfolio-card-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.portfolio-card-feature {
+    font-size: 1rem;
+    opacity: 0.7;
+    margin-top: auto;
+}
+
+.portfolio-back-link {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+.portfolio-back-link:hover {
+    opacity: 1;
+    transform: translateX(-5px);
+}
+
+
+#logoSection {
+    padding: 4rem 1rem;
+    margin: 2rem 0; 
+}
+
+.logo-image {
+    max-width: 90%; 
+    width: 600px; 
+    max-height: 600px; 
+    height: auto; 
+    object-fit: contain;
+    animation: fadeInScale 1s ease-out; 
+    border-radius: 24px; 
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.4s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.02); 
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+/* ============================================
+ * THEME-SPECIFIC OVERRIDES
+ * ============================================ */
+
+.minimal-theme .card { border: 2px solid rgba(0, 0, 0, 0.15); }
+.minimal-theme .price-badge, .minimal-theme .domain-badge { background: rgba(0, 0, 0, 0.05); }
+.minimal-theme a.card:hover { border-color: rgba(0, 0, 0, 0.3); }
+.minimal-theme .payment-badge { border: 2px solid rgba(0, 0, 0, 0.15); }
+
+.crypto-theme .card { border: 2px solid rgba(0, 212, 255, 0.4); }
+.crypto-theme a.card:hover { border-color: rgba(0, 212, 255, 0.6); box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3); }
+.crypto-theme .payment-badge { border: 2px solid rgba(0, 212, 255, 0.4); }
+
+.royal-theme .card { border: 2px solid rgba(255, 215, 0, 0.4); }
+.royal-theme a.card:hover { border-color: rgba(255, 215, 0, 0.6); box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3); }
+.royal-theme .payment-badge { border: 2px solid rgba(255, 215, 0, 0.4); }
+
+
+/* ============================================
+ * ANIMATIONS
+ * ============================================ */
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+
+/* ============================================
+ * MEDIA QUERIES (Responsive Design)
+ * ============================================ */
+
+@media (max-width: 768px) {
+    .hero { padding: 4rem 1rem; min-height: auto; }
+    h1.domain-name { font-size: 2.5rem; text-align: center; }
+    .domain-price { font-size: 2rem; }
+    .cta-buttons { flex-direction: column; align-items: stretch; gap: 1rem; width: 100%; max-width: 320px; margin: 0 auto; }
+    .cta-button, .cta-button-secondary { width: auto; text-align: center; }
+    .grid { grid-template-columns: 1fr; }
+    .section { padding: 2rem 0; }
+    .portfolio-back-link { top: 1rem; left: 1rem; }
+    footer.creator-badge { margin: 15px auto; font-size: 0.75rem; padding: 0.75rem 1.25rem; }
+    
+    #logoSection { padding: 2rem 1rem; }
+    .logo-image { width: 100%; } 
+}
