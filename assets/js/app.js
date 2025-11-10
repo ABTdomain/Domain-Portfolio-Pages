@@ -4,6 +4,7 @@ const SOCIAL_PLATFORMS = {
     whatsapp: { name: 'WhatsApp', urlPrefix: 'https://wa.me/', cleanValue: v => v.replace(/[^0-9]/g, '') },
     x: { name: 'X (Twitter)', urlPrefix: 'https://x.com/', cleanValue: v => v.replace('@', '') },
     wechat: { name: 'WeChat', urlPrefix: '#', isDisplay: true },
+    qq: { name: 'QQ', urlPrefix: '#', isDisplay: true },
     facebook: { name: 'Facebook', urlPrefix: 'https://facebook.com/', cleanValue: v => v.replace('@', '') },
     discord: { name: 'Discord', urlPrefix: 'https://discord.gg/' },
     linkedin: { name: 'LinkedIn', urlPrefix: 'https://linkedin.com/in/', cleanValue: v => v.replace('https://linkedin.com/in/', '').replace('/', '') },
