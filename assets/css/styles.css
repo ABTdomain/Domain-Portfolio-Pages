@@ -1386,8 +1386,8 @@ footer.creator-badge a:hover {
     #logoSection { padding: 2rem 1rem; }
     .logo-image { width: 100%; max-height: 300px; }
 
-    /* iOS: fixed background causes jank */
-    body { background-attachment: scroll !important; }
+    /* Mobile: gradient is moved to <html> by JS; let html stretch to full content height */
+    html { height: auto !important; min-height: 100% !important; }
 
     /* Brutalist theme: reduce shadows */
     .theme-brutalist .card { box-shadow: 3px 3px 0 #000; }
