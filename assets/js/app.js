@@ -14,6 +14,38 @@ const SOCIAL_PLATFORMS = {
     reddit: { name: 'Reddit', urlPrefix: 'https://reddit.com/u/', cleanValue: v => v.replace('/u/', '').replace('u/', '') }
 };
 
+// Google Fonts loader — only loads fonts that are actually needed
+const GOOGLE_FONTS_MAP = {
+    'IBM Plex Mono': 'IBM+Plex+Mono:wght@400;600;700',
+    'Space Mono': 'Space+Mono:wght@400;700',
+    'Outfit': 'Outfit:wght@300;400;600;700',
+    'Source Serif 4': 'Source+Serif+4:wght@400;600;700',
+    'Playfair Display': 'Playfair+Display:wght@400;700;900',
+    'Fira Code': 'Fira+Code:wght@400;600;700',
+    'Noto Serif JP': 'Noto+Serif+JP:wght@400;700',
+    'Cormorant Garamond': 'Cormorant+Garamond:wght@400;600;700',
+    'DM Sans': 'DM+Sans:wght@400;500;700',
+    'Press Start 2P': 'Press+Start+2P',
+    'Libre Baskerville': 'Libre+Baskerville:wght@400;700'
+};
+
+function loadGoogleFonts(template) {
+    const fontsToLoad = new Set();
+    [template.font, template.fontHeading].forEach(fontStr => {
+        if (!fontStr) return;
+        // Extract font family name (before the comma fallback)
+        const family = fontStr.split(',')[0].replace(/'/g, '').trim();
+        if (GOOGLE_FONTS_MAP[family]) {
+            fontsToLoad.add(GOOGLE_FONTS_MAP[family]);
+        }
+    });
+    if (fontsToLoad.size === 0) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?${[...fontsToLoad].map(f => `family=${f}`).join('&')}&display=swap`;
+    document.head.appendChild(link);
+}
+
 class DomainPortfolioApp {
     constructor() {
         const currentHostname = window.location.hostname.replace('www.', '');
@@ -34,6 +66,7 @@ class DomainPortfolioApp {
     }
 
     init() {
+        loadGoogleFonts(this.template);
         this._applyTheme();
         if (this.isPortfolio) {
             this._populatePortfolioPage();
@@ -103,7 +136,7 @@ class DomainPortfolioApp {
         document.getElementById('domainName').textContent = this.config.title || this.config.domain;
         document.getElementById('domainPrice').textContent = this.price;
         document.getElementById('priceNegotiable').textContent = this.config.priceNegotiable ? 'Price Negotiable' : 'Fixed Price';
-        document.getElementById('analyzeButton').href = `https://domainbeat.com?domain=${this.config.domain}`;
+        document.getElementById('analyzeButton').href = `https://domainkits.com/ai/analysis?domain=${this.config.domain}`;
         const backLink = document.getElementById('backToPortfolioLink');
         backLink.href = `https://${PORTFOLIO_CONFIG.domain}`;
         backLink.style.display = 'block';
@@ -192,8 +225,18 @@ class DomainPortfolioApp {
             description = `${displayName} is available for purchase. Premium asset for sale. Price: ${this.price}. ${this.config.priceNegotiable ? 'Price negotiable.' : 'Fixed price.'}`;
         }
         document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-        document.querySelector('meta[property="og:title"]')?.setAttribute('content', this.firstFeature ? `${displayName} - ${this.firstFeature}` : `${displayName} For Sale`);
+        const ogTitleStr = this.firstFeature ? `${displayName} - ${this.firstFeature}` : `${displayName} For Sale`;
+        document.querySelector('meta[property="og:title"]')?.setAttribute('content', ogTitleStr);
         document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+
+        // OG URL
+        const canonicalUrl = this.config.displayUrl || `https://${this.config.domain}/`;
+        document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
+
+        // Twitter card tags
+        document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', ogTitleStr);
+        document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
+
         const keywords = ['domain for sale', 'buy domain', 'premium domain', this.config.domain, displayName, ...(this.config.features || [])];
         let keywordsMeta = document.querySelector('meta[name="keywords"]');
         if (!keywordsMeta) {
@@ -215,25 +258,195 @@ class DomainPortfolioApp {
     _applyTheme() {
         const t = this.template;
         const root = document.documentElement;
+        const body = document.body;
+
+        // --- Core CSS variables (backward compatible) ---
         root.style.setProperty('--primary', t.primaryColor);
         root.style.setProperty('--secondary', t.secondaryColor);
         root.style.setProperty('--text', t.textColor);
         root.style.setProperty('--button', t.buttonColor);
         root.style.setProperty('--button-text', t.buttonTextColor);
-        const body = document.body;
+
+        // --- Background ---
         body.style.background = t.background;
         body.style.backgroundAttachment = 'fixed';
         body.style.backgroundSize = '100vw 100vh';
         body.style.backgroundRepeat = 'no-repeat';
         body.style.color = t.textColor;
+
+        // --- Extended: Typography ---
+        if (t.font) {
+            body.style.fontFamily = t.font;
+        }
+        if (t.fontHeading) {
+            root.style.setProperty('--font-heading', t.fontHeading);
+        }
+        if (t.fontSizeScale) {
+            root.style.setProperty('--font-scale', t.fontSizeScale);
+        }
+        if (t.letterSpacing) {
+            root.style.setProperty('--letter-spacing', t.letterSpacing);
+        }
+        if (t.lineHeight) {
+            root.style.setProperty('--line-height', t.lineHeight);
+        }
+
+        // --- Extended: Card styling ---
+        if (t.borderRadius !== undefined) {
+            root.style.setProperty('--border-radius', t.borderRadius);
+        }
+        if (t.cardBackground) {
+            root.style.setProperty('--card-bg', t.cardBackground);
+        }
+        if (t.cardBorder) {
+            root.style.setProperty('--card-border', t.cardBorder);
+        }
+        if (t.cardBorderTop) {
+            root.style.setProperty('--card-border-top', t.cardBorderTop);
+        }
+        if (t.cardBorderBottom) {
+            root.style.setProperty('--card-border-bottom', t.cardBorderBottom);
+        }
+        if (t.cardBlur) {
+            root.style.setProperty('--card-blur', t.cardBlur);
+        }
+        if (t.cardShadow) {
+            root.style.setProperty('--card-shadow', t.cardShadow);
+        }
+
+        // --- Extended: Text effects ---
+        if (t.textShadow) {
+            root.style.setProperty('--text-shadow', t.textShadow);
+        }
+
+        // --- Extended: Background pattern overlay ---
+        if (t.backgroundPattern) {
+            const overlay = document.createElement('div');
+            overlay.className = 'bg-pattern-overlay';
+            overlay.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;background-image:${t.backgroundPattern};`;
+            if (t.backgroundPatternSize) {
+                overlay.style.backgroundSize = t.backgroundPatternSize;
+            }
+            body.prepend(overlay);
+            document.getElementById('app').style.position = 'relative';
+            document.getElementById('app').style.zIndex = '1';
+        }
+
+        // --- Apply card style class to body ---
+        if (t.cardStyle) {
+            body.classList.add(`theme-${t.cardStyle}`);
+        }
+
+        // --- Legacy theme classes (backward compatible) ---
         if (this.config.template === 4) body.classList.add('minimal-theme');
         if (this.config.template === 5) body.classList.add('crypto-theme');
+
+        // --- Terminal scanline effect ---
+        if (t.scanline) {
+            const scanline = document.createElement('div');
+            scanline.className = 'scanline-overlay';
+            body.prepend(scanline);
+        }
+
+        // --- CTA button styling ---
         if (!this.isPortfolio) {
-            document.getElementById('ctaButton').style.background = t.buttonColor;
-            document.getElementById('ctaButton').style.color = t.buttonTextColor;
-            const analyzeButton = document.getElementById('analyzeButton');
-            analyzeButton.style.color = t.textColor;
-            analyzeButton.style.borderColor = t.buttonColor;
+            const ctaBtn = document.getElementById('ctaButton');
+            const analyzeBtn = document.getElementById('analyzeButton');
+            ctaBtn.style.background = t.buttonColor;
+            ctaBtn.style.color = t.buttonTextColor;
+            analyzeBtn.style.color = t.textColor;
+            analyzeBtn.style.borderColor = t.buttonColor;
+
+            if (t.ctaStyle === 'brutalist') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = '4px 4px 0 #000';
+                ctaBtn.style.border = '3px solid #000';
+                ctaBtn.style.textTransform = 'uppercase';
+                ctaBtn.style.letterSpacing = '0.05em';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.border = '3px solid #000';
+                analyzeBtn.style.boxShadow = '4px 4px 0 #000';
+            } else if (t.ctaStyle === 'glass') {
+                ctaBtn.style.backdropFilter = 'blur(12px)';
+                ctaBtn.style.border = '1px solid rgba(255,255,255,0.2)';
+                analyzeBtn.style.backdropFilter = 'blur(12px)';
+            } else if (t.ctaStyle === 'editorial') {
+                ctaBtn.style.borderRadius = '2px';
+                ctaBtn.style.boxShadow = 'none';
+                ctaBtn.style.textTransform = 'uppercase';
+                ctaBtn.style.letterSpacing = '0.12em';
+                ctaBtn.style.fontSize = '0.9rem';
+                analyzeBtn.style.borderRadius = '2px';
+                analyzeBtn.style.borderWidth = '1px';
+            } else if (t.ctaStyle === 'terminal') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = '0 0 12px rgba(0, 255, 65, 0.4)';
+                ctaBtn.style.border = '1px solid #00ff41';
+                ctaBtn.style.textTransform = 'uppercase';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.boxShadow = '0 0 8px rgba(0, 255, 65, 0.2)';
+            } else if (t.ctaStyle === 'wabi') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = 'none';
+                ctaBtn.style.letterSpacing = '0.2em';
+                ctaBtn.style.fontSize = '0.85rem';
+                ctaBtn.style.padding = '1rem 2.5rem';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.borderWidth = '1px';
+            } else if (t.ctaStyle === 'neumorph') {
+                ctaBtn.style.boxShadow = '6px 6px 12px #b8bec7, -6px -6px 12px #ffffff';
+                ctaBtn.style.border = 'none';
+                analyzeBtn.style.boxShadow = 'inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff';
+                analyzeBtn.style.border = 'none';
+                analyzeBtn.style.background = '#e0e5ec';
+            } else if (t.ctaStyle === 'retro') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = '4px 4px 0 #48dbfb';
+                ctaBtn.style.border = '2px solid #ff6ac1';
+                ctaBtn.style.textTransform = 'uppercase';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.boxShadow = '4px 4px 0 #ff6ac1';
+            } else if (t.ctaStyle === 'newspaper') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = 'none';
+                ctaBtn.style.textTransform = 'uppercase';
+                ctaBtn.style.letterSpacing = '0.1em';
+                ctaBtn.style.fontWeight = '700';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.borderWidth = '2px';
+            } else if (t.ctaStyle === 'noir') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = 'none';
+                ctaBtn.style.letterSpacing = '0.15em';
+                ctaBtn.style.textTransform = 'uppercase';
+                ctaBtn.style.fontSize = '0.85rem';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+            } else if (t.ctaStyle === 'candy') {
+                ctaBtn.style.borderRadius = '50px';
+                ctaBtn.style.boxShadow = '0 6px 24px rgba(233, 30, 144, 0.3)';
+                ctaBtn.style.fontWeight = '700';
+                analyzeBtn.style.borderRadius = '50px';
+                analyzeBtn.style.borderColor = 'rgba(233, 30, 144, 0.3)';
+                analyzeBtn.style.color = '#e91e90';
+            } else if (t.ctaStyle === 'blueprint') {
+                ctaBtn.style.borderRadius = '0';
+                ctaBtn.style.boxShadow = 'none';
+                ctaBtn.style.border = '2px solid #fff';
+                ctaBtn.style.textTransform = 'uppercase';
+                ctaBtn.style.letterSpacing = '0.08em';
+                analyzeBtn.style.borderRadius = '0';
+                analyzeBtn.style.borderColor = 'rgba(255,255,255,0.3)';
+            } else if (t.ctaStyle === 'zen') {
+                ctaBtn.style.borderRadius = '2px';
+                ctaBtn.style.boxShadow = 'none';
+                ctaBtn.style.letterSpacing = '0.2em';
+                ctaBtn.style.fontSize = '0.85rem';
+                ctaBtn.style.textTransform = 'uppercase';
+                analyzeBtn.style.borderRadius = '2px';
+                analyzeBtn.style.borderWidth = '1px';
+                analyzeBtn.style.borderColor = 'rgba(143, 188, 143, 0.3)';
+            }
         }
     }
 
@@ -286,7 +499,7 @@ class DomainPortfolioApp {
             document.head.appendChild(sitemapLink);
         }
     }
-    
+
     _injectAnalytics() {
         const gaId = this.config.googleAnalytics?.trim();
         if (!gaId) return;
@@ -303,7 +516,7 @@ class DomainPortfolioApp {
         `;
         document.head.appendChild(gaScript2);
     }
-    
+
     _addSchema() {
         if (this.isPortfolio) return;
         const schema = document.createElement('script');

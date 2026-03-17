@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Preview — Domain Portfolio Pages</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #111; color: #eee; }
+        .header { padding: 3rem 2rem; text-align: center; border-bottom: 1px solid #222; }
+        .header h1 { font-size: 2rem; font-weight: 300; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .header p { opacity: 0.5; font-size: 0.9rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 0; }
+        .theme-cell { border: 1px solid #222; overflow: hidden; position: relative; }
+        .theme-cell iframe { width: 100%; height: 600px; border: none; transform-origin: top left; }
+        .theme-label {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; z-index: 10;
+        }
+        .theme-label .name { font-weight: 600; }
+        .theme-label .id { opacity: 0.5; font-family: monospace; }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Theme Preview</h1>
+        <p>19 themes — click any preview to open full-screen</p>
+    </div>
+    <div class="grid" id="grid"></div>
+    <script src="assets/js/templates.js"></script>
+    <script>
+        const grid = document.getElementById('grid');
+        Object.entries(TEMPLATES).forEach(([id, t]) => {
+            const cell = document.createElement('div');
+            cell.className = 'theme-cell';
+            cell.innerHTML = `
+                <iframe src="preview-frame.html?theme=${id}" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+                <div class="theme-label">
+                    <span class="name">${t.name}</span>
+                    <span class="id">template: ${id}</span>
+                </div>
+            `;
+            cell.querySelector('iframe').addEventListener('click', () => {
+                window.open(`preview-frame.html?theme=${id}`, '_blank');
+            });
+            grid.appendChild(cell);
+        });
+    </script>
+</body>
+</html>

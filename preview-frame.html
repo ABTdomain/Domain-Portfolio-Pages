@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Preview</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <main id="salePageMain">
+            <section class="hero">
+                <div class="domain-badge">For Sale</div>
+                <h1 class="domain-name" id="domainName">ExampleDomain.com</h1>
+                <div class="domain-price" id="domainPrice">$88,000</div>
+                <div class="price-badge" id="priceNegotiable">Price Negotiable</div>
+                <div class="cta-buttons">
+                    <a href="#contactSection" class="cta-button" id="ctaButton">Get This Domain</a>
+                    <a href="#" class="cta-button-secondary" id="analyzeButton">Analyze Domain</a>
+                </div>
+            </section>
+
+            <section class="section" id="featuresSection">
+                <div class="container">
+                    <h2 class="section-title">Why This Domain</h2>
+                    <div class="grid" id="featuresGrid">
+                        <div class="card">Premium 2-word .com</div>
+                        <div class="card">High Brand Potential</div>
+                        <div class="card">SEO Optimized</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="contactSection">
+                <div class="container">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <div class="grid" id="contactGrid">
+                        <a href="#" class="card">
+                            <div class="label">Email</div>
+                            <div class="value">hello@example.com</div>
+                        </a>
+                        <a href="#" class="card">
+                            <div class="label">X (Twitter)</div>
+                            <div class="value">@example</div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="paymentsSection">
+                <div class="container">
+                    <h2 class="section-title">Secure Payment Methods</h2>
+                    <div class="payment-methods" id="paymentsList">
+                        <div class="payment-badge">Escrow.com</div>
+                        <div class="payment-badge">PayPal</div>
+                        <div class="payment-badge">Bank Transfer</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="creator-badge">
+            <div>
+                <span>Powered by</span>
+                <a href="#">ABTDomain.com</a>
+                <span>|</span>
+                <a href="#">GitHub</a>
+                <span style="opacity: 0.7;">v1.0.0</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/templates.js"></script>
+    <script>
+        // Google Fonts loader
+        const GOOGLE_FONTS_MAP = {
+            'IBM Plex Mono': 'IBM+Plex+Mono:wght@400;600;700',
+            'Space Mono': 'Space+Mono:wght@400;700',
+            'Outfit': 'Outfit:wght@300;400;600;700',
+            'Source Serif 4': 'Source+Serif+4:wght@400;600;700',
+            'Playfair Display': 'Playfair+Display:wght@400;700;900',
+            'Fira Code': 'Fira+Code:wght@400;600;700',
+            'Noto Serif JP': 'Noto+Serif+JP:wght@400;700',
+            'Cormorant Garamond': 'Cormorant+Garamond:wght@400;600;700',
+            'DM Sans': 'DM+Sans:wght@400;500;700',
+            'Press Start 2P': 'Press+Start+2P'
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const themeId = parseInt(params.get('theme')) || 1;
+        const t = TEMPLATES[themeId] || TEMPLATES[1];
+
+        // Load fonts
+        const fontsToLoad = new Set();
+        [t.font, t.fontHeading].forEach(fontStr => {
+            if (!fontStr) return;
+            const family = fontStr.split(',')[0].replace(/'/g, '').trim();
+            if (GOOGLE_FONTS_MAP[family]) fontsToLoad.add(GOOGLE_FONTS_MAP[family]);
+        });
+        if (fontsToLoad.size > 0) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = `https://fonts.googleapis.com/css2?${[...fontsToLoad].map(f => `family=${f}`).join('&')}&display=swap`;
+            document.head.appendChild(link);
+        }
+
+        // Apply theme
+        const root = document.documentElement;
+        const body = document.body;
+
+        root.style.setProperty('--primary', t.primaryColor);
+        root.style.setProperty('--secondary', t.secondaryColor);
+        root.style.setProperty('--text', t.textColor);
+        root.style.setProperty('--button', t.buttonColor);
+        root.style.setProperty('--button-text', t.buttonTextColor);
+
+        body.style.background = t.background;
+        body.style.backgroundAttachment = 'fixed';
+        body.style.backgroundSize = '100vw 100vh';
+        body.style.backgroundRepeat = 'no-repeat';
+        body.style.color = t.textColor;
+        if (t.font) body.style.fontFamily = t.font;
+        if (t.fontHeading) root.style.setProperty('--font-heading', t.fontHeading);
+        if (t.fontSizeScale) root.style.setProperty('--font-scale', t.fontSizeScale);
+        if (t.letterSpacing) root.style.setProperty('--letter-spacing', t.letterSpacing);
+        if (t.lineHeight) root.style.setProperty('--line-height', t.lineHeight);
+        if (t.borderRadius !== undefined) root.style.setProperty('--border-radius', t.borderRadius);
+        if (t.cardBackground) root.style.setProperty('--card-bg', t.cardBackground);
+        if (t.cardBorder) root.style.setProperty('--card-border', t.cardBorder);
+        if (t.cardBorderTop) root.style.setProperty('--card-border-top', t.cardBorderTop);
+        if (t.cardBorderBottom) root.style.setProperty('--card-border-bottom', t.cardBorderBottom);
+        if (t.cardBlur) root.style.setProperty('--card-blur', t.cardBlur);
+        if (t.cardShadow) root.style.setProperty('--card-shadow', t.cardShadow);
+        if (t.textShadow) root.style.setProperty('--text-shadow', t.textShadow);
+
+        if (t.backgroundPattern) {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;background-image:${t.backgroundPattern};`;
+            if (t.backgroundPatternSize) overlay.style.backgroundSize = t.backgroundPatternSize;
+            body.prepend(overlay);
+            document.getElementById('app').style.position = 'relative';
+            document.getElementById('app').style.zIndex = '1';
+        }
+
+        if (t.cardStyle) body.classList.add(`theme-${t.cardStyle}`);
+        if (themeId === 4) body.classList.add('minimal-theme');
+        if (themeId === 5) body.classList.add('crypto-theme');
+
+        if (t.scanline) {
+            const s = document.createElement('div');
+            s.className = 'scanline-overlay';
+            body.prepend(s);
+        }
+
+        // CTA styling
+        const ctaBtn = document.getElementById('ctaButton');
+        const analyzeBtn = document.getElementById('analyzeButton');
+        ctaBtn.style.background = t.buttonColor;
+        ctaBtn.style.color = t.buttonTextColor;
+        analyzeBtn.style.color = t.textColor;
+        analyzeBtn.style.borderColor = t.buttonColor;
+
+        if (t.ctaStyle === 'brutalist') {
+            ctaBtn.style.borderRadius = '0';
+            ctaBtn.style.boxShadow = '4px 4px 0 #000';
+            ctaBtn.style.border = '3px solid #000';
+            ctaBtn.style.textTransform = 'uppercase';
+            ctaBtn.style.letterSpacing = '0.05em';
+            analyzeBtn.style.borderRadius = '0';
+            analyzeBtn.style.border = '3px solid #000';
+            analyzeBtn.style.boxShadow = '4px 4px 0 #000';
+        } else if (t.ctaStyle === 'glass') {
+            ctaBtn.style.backdropFilter = 'blur(12px)';
+            ctaBtn.style.border = '1px solid rgba(255,255,255,0.2)';
+            analyzeBtn.style.backdropFilter = 'blur(12px)';
+        } else if (t.ctaStyle === 'editorial') {
+            ctaBtn.style.borderRadius = '2px';
+            ctaBtn.style.boxShadow = 'none';
+            ctaBtn.style.textTransform = 'uppercase';
+            ctaBtn.style.letterSpacing = '0.12em';
+            ctaBtn.style.fontSize = '0.9rem';
+            analyzeBtn.style.borderRadius = '2px';
+            analyzeBtn.style.borderWidth = '1px';
+        } else if (t.ctaStyle === 'terminal') {
+            ctaBtn.style.borderRadius = '0';
+            ctaBtn.style.boxShadow = '0 0 12px rgba(0, 255, 65, 0.4)';
+            ctaBtn.style.border = '1px solid #00ff41';
+            ctaBtn.style.textTransform = 'uppercase';
+            analyzeBtn.style.borderRadius = '0';
+            analyzeBtn.style.boxShadow = '0 0 8px rgba(0, 255, 65, 0.2)';
+        } else if (t.ctaStyle === 'wabi') {
+            ctaBtn.style.borderRadius = '0';
+            ctaBtn.style.boxShadow = 'none';
+            ctaBtn.style.letterSpacing = '0.2em';
+            ctaBtn.style.fontSize = '0.85rem';
+            ctaBtn.style.padding = '1rem 2.5rem';
+            analyzeBtn.style.borderRadius = '0';
+            analyzeBtn.style.borderWidth = '1px';
+        } else if (t.ctaStyle === 'neumorph') {
+            ctaBtn.style.boxShadow = '6px 6px 12px #b8bec7, -6px -6px 12px #ffffff';
+            ctaBtn.style.border = 'none';
+            analyzeBtn.style.boxShadow = 'inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff';
+            analyzeBtn.style.border = 'none';
+            analyzeBtn.style.background = '#e0e5ec';
+        } else if (t.ctaStyle === 'retro') {
+            ctaBtn.style.borderRadius = '0';
+            ctaBtn.style.boxShadow = '4px 4px 0 #48dbfb';
+            ctaBtn.style.border = '2px solid #ff6ac1';
+            ctaBtn.style.textTransform = 'uppercase';
+            analyzeBtn.style.borderRadius = '0';
+            analyzeBtn.style.boxShadow = '4px 4px 0 #ff6ac1';
+        }
+    </script>
+</body>
+</html>
